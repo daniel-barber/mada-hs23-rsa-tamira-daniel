@@ -4,15 +4,16 @@ import java.security.SecureRandom;
 public class RSAGenerator {
     public static void main(String[] args) {
 
-        //Random generator
-        SecureRandom random = new SecureRandom();
-
-        //Set bitLength to size analog bitLength of example in sk.txt
-        int bitLength = 1024;
-
         //Generate 2 prime numbers
-        BigInteger p = BigInteger.probablePrime(bitLength, random);
-        BigInteger q = BigInteger.probablePrime(bitLength, random);
+        BigInteger p = generatePrimeNumber();
+        BigInteger q = generatePrimeNumber();
+
+        //Check if p and q are prime
+        int i = 100;
+        boolean isPPrime = p.isProbablePrime(i);
+        boolean isQPrime = q.isProbablePrime(i);
+
+
 
         //Multiply prime numbers to calculate n
         BigInteger n = p.multiply(q);
@@ -29,13 +30,33 @@ public class RSAGenerator {
         System.out.println(p);
         System.out.println(q);
         System.out.println(n);
+        System.out.println(pn);
         System.out.println(d);
+        System.out.println((e.multiply(d).mod(pn).equals(BigInteger.ONE)));
 
+    }
+
+    private static BigInteger generatePrimeNumber() {
+
+        //Random generator
+        SecureRandom random = new SecureRandom();
+
+        //Set bitLength to size analog bitLength of example in sk.txt
+        int bitLength = 1024;
+
+        BigInteger p = BigInteger.probablePrime(bitLength, random);
+        return p;
     }
 
     public static BigInteger dBerechner(BigInteger n, BigInteger e) {
         BigInteger a = n;
         BigInteger b = e;
+
+        //Check if GGT of n and e is 1
+        if (!a.gcd(b).equals(BigInteger.ONE)) {
+            throw new IllegalArgumentException("e and n are not coprime.");
+        }
+
         BigInteger x;
         BigInteger y;
         BigInteger x0 = BigInteger.ONE;
