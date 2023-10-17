@@ -31,7 +31,7 @@ public class RSAGenerator {
 
     }
 
-    private static BigInteger generatePrimeNumber() {
+    static BigInteger generatePrimeNumber() {
 
         //Random generator
         SecureRandom random = new SecureRandom();
