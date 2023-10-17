@@ -5,19 +5,25 @@ import java.security.SecureRandom;
 
 public class RSAGenerator {
     public static void main(String[] args) {
-
-        //Generate 2 prime numbers
-        BigInteger p = generatePrimeNumber();
-        BigInteger q = generatePrimeNumber();
-
-        //Multiply prime numbers to calculate n
-        BigInteger n = p.multiply(q);
-
-        //Calculate Phi von n
-        BigInteger pn = (p.subtract(BigInteger.ONE)).multiply(q.subtract(BigInteger.ONE));
-
+        BigInteger p;
+        BigInteger q;
+        BigInteger n;
+        BigInteger pn;
         //Typical e is 3 or 65537. We choose 3 because it's small and easy
         BigInteger e = new BigInteger("3");
+        do {
+
+            //Generate 2 prime numbers
+            p = generatePrimeNumber();
+            q = generatePrimeNumber();
+
+            //Multiply prime numbers to calculate n
+            n = p.multiply(q);
+
+            //Calculate Phi von n
+            pn = (p.subtract(BigInteger.ONE)).multiply(q.subtract(BigInteger.ONE));
+        }while(!areCoprime(pn,e));
+
 
         //Calculate d with Euklidischer Algo
         BigInteger d = dBerechner(pn, e);
@@ -29,6 +35,10 @@ public class RSAGenerator {
         System.out.println(d);
         System.out.println((e.multiply(d)).mod(pn).equals(BigInteger.ONE));
 
+    }
+
+    private static boolean areCoprime(BigInteger pn, BigInteger e) {
+        return pn.gcd(e).equals(BigInteger.ONE);
     }
 
     static BigInteger generatePrimeNumber() {
@@ -57,9 +67,9 @@ public class RSAGenerator {
         BigInteger b = e;
 
         //Check if GGT of n and e is 1
-        if (!a.gcd(b).equals(BigInteger.ONE)) {
-            throw new IllegalArgumentException("e and n are not coprime.");
-        }
+      //  if (!a.gcd(b).equals(BigInteger.ONE)) {
+      //      throw new IllegalArgumentException("e and n are not coprime.");
+      //  }
 
         BigInteger x;
         BigInteger y;
