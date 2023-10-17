@@ -20,16 +20,21 @@ public class RSAGenerator {
         //Typical e is 3 or 65537. We choose 3 because it's small and easy
         BigInteger e = new BigInteger("3");
 
+        //Calculade d with Euklidischer Algo
+        BigInteger d = dBerechner(n,e);
+
         System.out.println(p);
         System.out.println(q);
         System.out.println(n);
+        System.out.println(d);
+
     }
 
     public static BigInteger dBerechner(BigInteger n, BigInteger e) {
         BigInteger a = n;
         BigInteger b = e;
-        int x;
-        int y;
+        BigInteger x;
+        BigInteger y;
         BigInteger x0 = BigInteger.ONE;
         BigInteger y0 = BigInteger.ZERO;
         BigInteger x1 = BigInteger.ZERO;
@@ -46,18 +51,18 @@ public class RSAGenerator {
             y = y0;
             x0 = x1;
             y0 = y1;
-            x1 = x - q.multiply(x1);
-            y1 = y - q.multiply(y1);
+            x1 = x.subtract(q.multiply(x1));
+            y1 = y.subtract(q.multiply(y1));
         }
-        int d = y0;
+        BigInteger d = y0;
 
-        if (a == 1) {
-            while (d < 0) {
-                d += n;
+        if (a.equals(BigInteger.ONE)) {
+            while (d.compareTo(BigInteger.ZERO) < 0) {
+                d = d.add(n);
             }
             return d;
         } else {
-            return -1;
+            return BigInteger.valueOf(-1);
         }
     }
 
