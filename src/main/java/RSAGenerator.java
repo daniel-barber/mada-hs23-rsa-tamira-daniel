@@ -8,31 +8,24 @@ public class RSAGenerator {
         BigInteger p = generatePrimeNumber();
         BigInteger q = generatePrimeNumber();
 
-        //Check if p and q are prime
-        int i = 100;
-        boolean isPPrime = p.isProbablePrime(i);
-        boolean isQPrime = q.isProbablePrime(i);
-
-
-
         //Multiply prime numbers to calculate n
         BigInteger n = p.multiply(q);
 
         //Calculate Phi von n
-        BigInteger pn = (p.subtract(BigInteger.ONE).multiply(q.subtract(BigInteger.ONE)));
+        BigInteger pn = (p.subtract(BigInteger.ONE)).multiply(q.subtract(BigInteger.ONE));
 
         //Typical e is 3 or 65537. We choose 3 because it's small and easy
         BigInteger e = new BigInteger("3");
 
         //Calculate d with Euklidischer Algo
-        BigInteger d = dBerechner(pn,e);
+        BigInteger d = dBerechner(pn, e);
 
         System.out.println(p);
         System.out.println(q);
         System.out.println(n);
         System.out.println(pn);
         System.out.println(d);
-        System.out.println((e.multiply(d).mod(pn).equals(BigInteger.ONE)));
+        System.out.println((e.multiply(d)).mod(pn).equals(BigInteger.ONE));
 
     }
 
@@ -44,8 +37,17 @@ public class RSAGenerator {
         //Set bitLength to size analog bitLength of example in sk.txt
         int bitLength = 1024;
 
-        BigInteger p = BigInteger.probablePrime(bitLength, random);
-        return p;
+        //Set iteration amount for certainty of Miller-Rabin test
+        int i = 100;
+
+        //Prime number generator including check, regenerate if not prime
+        BigInteger prime;
+        do {
+            prime = BigInteger.probablePrime(bitLength, random);
+        } while (!prime.isProbablePrime(i));
+
+
+        return prime;
     }
 
     public static BigInteger dBerechner(BigInteger n, BigInteger e) {
