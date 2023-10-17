@@ -17,11 +17,14 @@ public class RSAGenerator {
         //Multiply prime numbers to calculate n
         BigInteger n = p.multiply(q);
 
+        //Calculate Phi von n
+        BigInteger pn = (p.subtract(BigInteger.ONE).multiply(q.subtract(BigInteger.ONE)));
+
         //Typical e is 3 or 65537. We choose 3 because it's small and easy
         BigInteger e = new BigInteger("3");
 
-        //Calculade d with Euklidischer Algo
-        BigInteger d = dBerechner(n,e);
+        //Calculate d with Euklidischer Algo
+        BigInteger d = dBerechner(pn,e);
 
         System.out.println(p);
         System.out.println(q);
