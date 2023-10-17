@@ -1,3 +1,5 @@
+package rsagenerator;
+
 import java.math.BigInteger;
 import java.security.SecureRandom;
 
