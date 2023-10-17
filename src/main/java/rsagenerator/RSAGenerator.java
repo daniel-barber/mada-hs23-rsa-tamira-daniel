@@ -1,5 +1,8 @@
 package rsagenerator;
 
+import java.io.BufferedWriter;
+import java.io.FileWriter;
+import java.io.IOException;
 import java.math.BigInteger;
 import java.security.SecureRandom;
 
@@ -22,7 +25,7 @@ public class RSAGenerator {
 
             //Calculate Phi von n
             pn = (p.subtract(BigInteger.ONE)).multiply(q.subtract(BigInteger.ONE));
-        }while(!areCoprime(pn,e));
+        } while (!areCoprime(pn, e));
 
 
         //Calculate d with Euklidischer Algo
@@ -35,6 +38,19 @@ public class RSAGenerator {
         System.out.println(d);
         System.out.println((e.multiply(d)).mod(pn).equals(BigInteger.ONE));
 
+        //Write (n,d) to sk.txt
+        try (BufferedWriter skWriter = new BufferedWriter(new FileWriter("target/sk.txt"))) {
+            skWriter.write("(" + n + "," + d + ")");
+        } catch (IOException ex) {
+            throw new RuntimeException("Write to sk.txt failed.");
+        }
+
+        //Write (n,d) to sk.txt
+        try (BufferedWriter skWriter = new BufferedWriter(new FileWriter("target/pk.txt"))) {
+            skWriter.write("(" + n + "," + e + ")");
+        } catch (IOException ex) {
+            throw new RuntimeException("Write to pk.txt failed.");
+        }
     }
 
     private static boolean areCoprime(BigInteger pn, BigInteger e) {
@@ -67,9 +83,9 @@ public class RSAGenerator {
         BigInteger b = e;
 
         //Check if GGT of n and e is 1
-      //  if (!a.gcd(b).equals(BigInteger.ONE)) {
-      //      throw new IllegalArgumentException("e and n are not coprime.");
-      //  }
+        //  if (!a.gcd(b).equals(BigInteger.ONE)) {
+        //      throw new IllegalArgumentException("e and n are not coprime.");
+        //  }
 
         BigInteger x;
         BigInteger y;
