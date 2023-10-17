@@ -11,10 +11,14 @@ public class RSAGenerator {
         int bitLength = 1024;
 
         //Generate 2 prime numbers
-        BigInteger prime1 = BigInteger.probablePrime(bitLength,random);
-        BigInteger prime2 = BigInteger.probablePrime(bitLength,random);
+        BigInteger p = BigInteger.probablePrime(bitLength,random);
+        BigInteger q = BigInteger.probablePrime(bitLength,random);
 
-        System.out.println(prime1);
-        System.out.println(prime2);
+        //Multiply prime numbers to calculate n
+        BigInteger n = p.multiply(q);
+
+        System.out.println(p);
+        System.out.println(q);
+        System.out.println(n);
     }
 }
