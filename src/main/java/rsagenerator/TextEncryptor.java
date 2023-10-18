@@ -15,7 +15,7 @@ public class TextEncryptor {
         BigInteger e = null;
 
         //public key einlesen und in n und e einspeichern
-        String pk = readFile("pk");
+        String pk = FileHandler.readFile("pk");
         if (pk != null) {
             pk = pk.substring(1, pk.length() - 1);
             String[] pkParts = pk.split(",");
@@ -26,7 +26,7 @@ public class TextEncryptor {
         }
 
         //text.txt einlesen und String in Ascii in int Array speichern
-        String text = readFile("text");
+        String text = FileHandler.readFile("text");
         int[] textInAscii = toAscii(text);
 
         //Loop zur Verschlüsselung der Ascii Werte mit der schnellen exponentation
@@ -36,7 +36,7 @@ public class TextEncryptor {
         }
 
         //output to chiffre.txt
-        writeFile(encrytedAscii);
+        FileHandler.writeFile(encrytedAscii);
 
         System.out.println("unencrypted text: " + text);
         System.out.println("public key: " + pk);
@@ -53,51 +53,12 @@ public class TextEncryptor {
 
     }
 
-    private static void writeFile(BigInteger[] encryptedAscii) {
-
-        try(BufferedWriter writer = new BufferedWriter(new FileWriter("target/chiffre.txt"))){
-            for(int i=0;i<encryptedAscii.length;i++){
-                writer.write(encryptedAscii[i].toString());
-                if(i<encryptedAscii.length-1){
-                    writer.write(",");
-                }
-            }
-        }
-        catch (IOException e){
-            e.printStackTrace();
-        }
-    }
-
     private static int[] toAscii(String text) {
         int[] asciiCodes = new int[text.length()];
         for (int i = 0; i < text.length(); i++) {
             asciiCodes[i] = (int) text.charAt(i);
         }
         return asciiCodes;
-    }
-
-    private static String readFile(String fileName) {
-        String input;
-        try (
-            BufferedReader textReader = new BufferedReader(new FileReader("src/main/resources/" + fileName + ".txt"))) {
-            input = textReader.readLine();
-        } catch (IOException ex) {
-            throw new RuntimeException("couldn't find text.txt in /resources or file not compatible.");
-        }
-        if (!isAscii(input)) {
-            throw new RuntimeException(fileName + ".txt contains non-ASCII characters");
-        }
-
-        return input;
-    }
-
-    public static boolean isAscii(String input) {
-        for (int i = 0; i < input.length(); i++) {
-            if (input.charAt(i) > 127) {
-                return false;
-            }
-        }
-        return true;
     }
 
     public static BigInteger encrypt(BigInteger x, BigInteger n, BigInteger e){
