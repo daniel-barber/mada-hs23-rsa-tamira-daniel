@@ -82,11 +82,6 @@ public class RSAGenerator {
         BigInteger a = n;
         BigInteger b = e;
 
-        //Check if GGT of n and e is 1
-        //  if (!a.gcd(b).equals(BigInteger.ONE)) {
-        //      throw new IllegalArgumentException("e and n are not coprime.");
-        //  }
-
         BigInteger x;
         BigInteger y;
         BigInteger x0 = BigInteger.ONE;
