@@ -1,7 +1,9 @@
 package rsagenerator;
 
 import java.io.BufferedReader;
+import java.io.BufferedWriter;
 import java.io.FileReader;
+import java.io.FileWriter;
 import java.io.IOException;
 import java.math.BigInteger;
 
@@ -28,10 +30,13 @@ public class TextEncryptor {
         int[] textInAscii = toAscii(text);
 
         //Loop zur Verschlüsselung der Ascii Werte mit der schnellen exponentation
-        int[] encrytedAscii = new int[text.length()];
+        BigInteger[] encrytedAscii = new BigInteger[text.length()];
         for (int i=0;i<textInAscii.length;i++) {
-            encrytedAscii[i]=encrypt(textInAscii[i],n,e);
+            encrytedAscii[i]=encrypt(BigInteger.valueOf(textInAscii[i]),n,e);
         }
+
+        //output to chiffre.txt
+        writeFile(encrytedAscii);
 
         System.out.println("unencrypted text: " + text);
         System.out.println("public key: " + pk);
@@ -42,10 +47,25 @@ public class TextEncryptor {
             System.out.print(element + ",");
         }
         System.out.println();
-        for (int element : encrytedAscii) {
+        for (BigInteger element : encrytedAscii) {
             System.out.print(element + ",");
         }
 
+    }
+
+    private static void writeFile(BigInteger[] encryptedAscii) {
+
+        try(BufferedWriter writer = new BufferedWriter(new FileWriter("target/chiffre.txt"))){
+            for(int i=0;i<encryptedAscii.length;i++){
+                writer.write(encryptedAscii[i].toString());
+                if(i<encryptedAscii.length-1){
+                    writer.write(",");
+                }
+            }
+        }
+        catch (IOException e){
+            e.printStackTrace();
+        }
     }
 
     private static int[] toAscii(String text) {
@@ -80,14 +100,14 @@ public class TextEncryptor {
         return true;
     }
 
-    public static int encrypt(int x, BigInteger n, BigInteger e){
+    public static BigInteger encrypt(BigInteger x, BigInteger n, BigInteger e){
         //exponent e in binary Konvertieren und Länge bestimmen für i
         String binaryString = e.toString(2);
         int i = binaryString.length()-1;
 
         //initialisierung
         BigInteger h = BigInteger.ONE;
-        BigInteger k = BigInteger.valueOf(x);
+        BigInteger k = x;
 
 
         while(i>=0){
@@ -98,7 +118,7 @@ public class TextEncryptor {
             i--;
         }
 
-        return h.intValue();
+        return h;
 
     }
 
