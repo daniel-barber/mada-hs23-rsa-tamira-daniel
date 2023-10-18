@@ -65,4 +65,12 @@ public class FileHandler {
         }
         return true;
     }
+
+     static int[] toAscii(String text) {
+        int[] asciiCodes = new int[text.length()];
+        for (int i = 0; i < text.length(); i++) {
+            asciiCodes[i] = (int) text.charAt(i);
+        }
+        return asciiCodes;
+    }
 }

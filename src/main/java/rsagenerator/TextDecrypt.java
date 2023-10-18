@@ -14,5 +14,9 @@ public class TextDecrypt {
         BigInteger[] privateKeyValues = FileHandler.readPrivateKey("sk");
         n = privateKeyValues[0];
         d = privateKeyValues[1];
+
+        //chiffre.txt einlesen und String in Ascii in int Array speichern
+        String text = FileHandler.readFile("chiffre");
+        int[] textInAscii = FileHandler.toAscii(text);
     }
 }

@@ -22,7 +22,7 @@ public class TextEncryptor {
 
         //text.txt einlesen und String in Ascii in int Array speichern
         String text = FileHandler.readFile("text");
-        int[] textInAscii = toAscii(text);
+        int[] textInAscii = FileHandler.toAscii(text);
 
         //Loop zur Verschlüsselung der Ascii Werte mit der schnellen exponentation
         BigInteger[] encrytedAscii = new BigInteger[text.length()];
@@ -46,14 +46,6 @@ public class TextEncryptor {
             System.out.print(element + ",");
         }
 
-    }
-
-    private static int[] toAscii(String text) {
-        int[] asciiCodes = new int[text.length()];
-        for (int i = 0; i < text.length(); i++) {
-            asciiCodes[i] = (int) text.charAt(i);
-        }
-        return asciiCodes;
     }
 
     public static BigInteger encrypt(BigInteger x, BigInteger n, BigInteger e) {
