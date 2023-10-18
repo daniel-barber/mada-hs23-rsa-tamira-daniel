@@ -11,19 +11,14 @@ public class TextEncryptor {
     public static void main(String[] args) {
 
         //öffentlicher Schlüssel ist in Format (n,e)
-        BigInteger n = null;
-        BigInteger e = null;
+        BigInteger n;
+        BigInteger e;
 
         //public key einlesen und in n und e einspeichern
         String pk = FileHandler.readFile("pk");
-        if (pk != null) {
-            pk = pk.substring(1, pk.length() - 1);
-            String[] pkParts = pk.split(",");
-            if (pkParts.length == 2) {
-                n = new BigInteger(pkParts[0]);
-                e = new BigInteger(pkParts[1]);
-            }
-        }
+        BigInteger[] privateKeyValues = FileHandler.readPrivateKey("pk");
+        n = privateKeyValues[0];
+        e = privateKeyValues[1];
 
         //text.txt einlesen und String in Ascii in int Array speichern
         String text = FileHandler.readFile("text");
@@ -31,8 +26,8 @@ public class TextEncryptor {
 
         //Loop zur Verschlüsselung der Ascii Werte mit der schnellen exponentation
         BigInteger[] encrytedAscii = new BigInteger[text.length()];
-        for (int i=0;i<textInAscii.length;i++) {
-            encrytedAscii[i]=encrypt(BigInteger.valueOf(textInAscii[i]),n,e);
+        for (int i = 0; i < textInAscii.length; i++) {
+            encrytedAscii[i] = encrypt(BigInteger.valueOf(textInAscii[i]), n, e);
         }
 
         //output to chiffre.txt
@@ -61,21 +56,21 @@ public class TextEncryptor {
         return asciiCodes;
     }
 
-    public static BigInteger encrypt(BigInteger x, BigInteger n, BigInteger e){
+    public static BigInteger encrypt(BigInteger x, BigInteger n, BigInteger e) {
         //exponent e in binary Konvertieren und Länge bestimmen für i
         String binaryString = e.toString(2);
-        int i = binaryString.length()-1;
+        int i = binaryString.length() - 1;
 
         //initialisierung
         BigInteger h = BigInteger.ONE;
         BigInteger k = x;
 
 
-        while(i>=0){
-            if(binaryString.charAt(i)=='1'){
-                h=(h.multiply(k)).mod(n);
+        while (i >= 0) {
+            if (binaryString.charAt(i) == '1') {
+                h = (h.multiply(k)).mod(n);
             }
-            k=k.modPow(BigInteger.valueOf(2),n);
+            k = k.modPow(BigInteger.valueOf(2), n);
             i--;
         }
 

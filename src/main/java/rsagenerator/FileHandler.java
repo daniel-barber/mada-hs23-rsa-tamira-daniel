@@ -24,6 +24,24 @@ public class FileHandler {
         return input;
     }
 
+    public static BigInteger[] readPrivateKey(String fileName) {
+        String privateKey = readFile(fileName);
+        return parsePrivateKey(privateKey);
+    }
+
+    private static BigInteger[] parsePrivateKey(String privateKey) {
+        privateKey = privateKey.substring(1, privateKey.length() - 1);
+        String[] keyParts = privateKey.split(",");
+        if (keyParts.length != 2) {
+            throw new RuntimeException("Invalid private key format");
+        }
+
+        BigInteger n = new BigInteger(keyParts[0]);
+        BigInteger d = new BigInteger(keyParts[1]);
+
+        return new BigInteger[]{n, d};
+    }
+
     static void writeFile(BigInteger[] encryptedAscii) {
 
         try(BufferedWriter writer = new BufferedWriter(new FileWriter("target/chiffre.txt"))){
