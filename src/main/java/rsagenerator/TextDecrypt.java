@@ -18,5 +18,11 @@ public class TextDecrypt {
         //chiffre.txt einlesen und String in Ascii in int Array speichern
         String text = FileHandler.readFile("chiffre");
         int[] textInAscii = FileHandler.toAscii(text);
+
+        //Loop zur Verschlüsselung der Ascii Werte mit der schnellen exponentation
+        BigInteger[] decrytedAscii = new BigInteger[text.length()];
+        for (int i = 0; i < textInAscii.length; i++) {
+            decrytedAscii[i] = SchnelleExponentiation.quickExpo(BigInteger.valueOf(textInAscii[i]), n, d);
+        }
     }
 }

@@ -27,7 +27,7 @@ public class TextEncryptor {
         //Loop zur Verschlüsselung der Ascii Werte mit der schnellen exponentation
         BigInteger[] encrytedAscii = new BigInteger[text.length()];
         for (int i = 0; i < textInAscii.length; i++) {
-            encrytedAscii[i] = encrypt(BigInteger.valueOf(textInAscii[i]), n, e);
+            encrytedAscii[i] = SchnelleExponentiation.quickExpo(BigInteger.valueOf(textInAscii[i]), n, e);
         }
 
         //output to chiffre.txt
@@ -48,27 +48,7 @@ public class TextEncryptor {
 
     }
 
-    public static BigInteger encrypt(BigInteger x, BigInteger n, BigInteger e) {
-        //exponent e in binary Konvertieren und Länge bestimmen für i
-        String binaryString = e.toString(2);
-        int i = binaryString.length() - 1;
 
-        //initialisierung
-        BigInteger h = BigInteger.ONE;
-        BigInteger k = x;
-
-
-        while (i >= 0) {
-            if (binaryString.charAt(i) == '1') {
-                h = (h.multiply(k)).mod(n);
-            }
-            k = k.modPow(BigInteger.valueOf(2), n);
-            i--;
-        }
-
-        return h;
-
-    }
 
 
 }
