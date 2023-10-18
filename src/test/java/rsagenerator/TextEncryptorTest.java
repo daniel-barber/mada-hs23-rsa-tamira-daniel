@@ -18,7 +18,7 @@ public class TextEncryptorTest {
         BigInteger e = BigInteger.valueOf(25);
 
         //When
-        BigInteger result = TextEncryptor.encrypt(x,n,e);
+        BigInteger result = SchnelleExponentiation.quickExpo(x,n,e);
 
         //Then
         assertEquals(BigInteger.valueOf(1),result);

@@ -45,7 +45,7 @@ public class RSAGenerator {
             throw new RuntimeException("Write to sk.txt failed.");
         }
 
-        //Write (n,d) to sk.txt
+        //Write (n,e) to pk.txt
         try (BufferedWriter skWriter = new BufferedWriter(new FileWriter("target/pk.txt"))) {
             skWriter.write("(" + n + "," + e + ")");
         } catch (IOException ex) {

@@ -1,10 +1,5 @@
 package rsagenerator;
 
-import java.io.BufferedReader;
-import java.io.BufferedWriter;
-import java.io.FileReader;
-import java.io.FileWriter;
-import java.io.IOException;
 import java.math.BigInteger;
 
 public class TextEncryptor {
@@ -15,14 +10,14 @@ public class TextEncryptor {
         BigInteger e;
 
         //public key einlesen und in n und e einspeichern
-        String pk = FileHandler.readFile("pk");
-        BigInteger[] privateKeyValues = FileHandler.readPrivateKey("pk");
+        String pk = FileHandler.readTextFile("pk");
+        BigInteger[] privateKeyValues = FileHandler.readKey("pk");
         n = privateKeyValues[0];
         e = privateKeyValues[1];
 
         //text.txt einlesen und String in Ascii in int Array speichern
-        String text = FileHandler.readFile("text");
-        int[] textInAscii = FileHandler.toAscii(text);
+        String text = FileHandler.readTextFile("text");
+        int[] textInAscii = FileHandler.toAsciiCode(text);
 
         //Loop zur Verschlüsselung der Ascii Werte mit der schnellen exponentation
         BigInteger[] encrytedAscii = new BigInteger[text.length()];
@@ -31,7 +26,7 @@ public class TextEncryptor {
         }
 
         //output to chiffre.txt
-        FileHandler.writeFile(encrytedAscii);
+        FileHandler.writeFile(encrytedAscii, "chiffre.txt");
 
         System.out.println("unencrypted text: " + text);
         System.out.println("public key: " + pk);
