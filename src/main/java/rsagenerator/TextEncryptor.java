@@ -6,8 +6,10 @@ import java.io.IOException;
 
 public class TextEncryptor {
     public static void main(String[] args) {
-        String text = readFile("text");
         String pk = readFile("pk");
+        String text = readFile("text");
+
+
         System.out.println("unencrypted text: " + text);
         System.out.println("public key: " + pk);
 
