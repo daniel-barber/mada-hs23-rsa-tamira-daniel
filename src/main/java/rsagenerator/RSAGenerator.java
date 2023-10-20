@@ -7,15 +7,26 @@ import java.math.BigInteger;
 import java.security.SecureRandom;
 
 public class RSAGenerator {
+    // Konfigurierbare Konstanten
+    // Bitlänge für die Generierung der Primzahlen, analog Bitlänge des Keys in sk.txt gesetzt
+    private static final int BIT_LENGTH = 1024;
+
+    //Anzahl Iterationen für Miller-Rabin Funktion (Fehlerwahrscheinlichkeit verkleinern)
+    private static final int MILLER_RABIN_ITERATIONS = 100;
+
+    // Exponent e. Typischer e ist 3 oder 65537. Wir haben 3 gewählt, weil es klein und einfach ist
+    private static final BigInteger PUBLIC_EXPONENT = new BigInteger("3");
+
+
     public static void main(String[] args) {
+        //Variablen
         BigInteger p;
         BigInteger q;
         BigInteger n;
         BigInteger pn;
-        //Typical e is 3 or 65537. We choose 3 because it's small and easy
-        BigInteger e = new BigInteger("3");
-        do {
+        BigInteger e = PUBLIC_EXPONENT;
 
+        do {
             //Generate 2 prime numbers
             p = generatePrimeNumber();
             q = generatePrimeNumber();
@@ -27,16 +38,8 @@ public class RSAGenerator {
             pn = (p.subtract(BigInteger.ONE)).multiply(q.subtract(BigInteger.ONE));
         } while (!areCoprime(pn, e));
 
-
         //Calculate d with Euklidischer Algo
         BigInteger d = dBerechner(pn, e);
-
-        System.out.println(p);
-        System.out.println(q);
-        System.out.println(n);
-        System.out.println(pn);
-        System.out.println(d);
-        System.out.println((e.multiply(d)).mod(pn).equals(BigInteger.ONE));
 
         //Write (n,d) to sk.txt
         try (BufferedWriter skWriter = new BufferedWriter(new FileWriter("target/sk.txt"))) {
@@ -58,30 +61,23 @@ public class RSAGenerator {
     }
 
     static BigInteger generatePrimeNumber() {
-
         //Random generator
         SecureRandom random = new SecureRandom();
 
-        //Set bitLength to size analog bitLength of example in sk.txt
-        int bitLength = 1024;
-
-        //Set iteration amount for certainty of Miller-Rabin test
-        int i = 100;
-
         //Prime number generator including check, regenerate if not prime
         BigInteger prime;
-        do {
-            prime = BigInteger.probablePrime(bitLength, random);
-        } while (!prime.isProbablePrime(i));
 
+        do {
+            prime = BigInteger.probablePrime(BIT_LENGTH, random);
+        } while (!prime.isProbablePrime(MILLER_RABIN_ITERATIONS));
 
         return prime;
     }
 
     public static BigInteger dBerechner(BigInteger n, BigInteger e) {
+        //Variablen
         BigInteger a = n;
         BigInteger b = e;
-
         BigInteger x;
         BigInteger y;
         BigInteger x0 = BigInteger.ONE;
@@ -91,6 +87,7 @@ public class RSAGenerator {
         BigInteger q;
         BigInteger r;
 
+        //Umsetzung Euklidischer Algo
         while (!b.equals(BigInteger.ZERO)) {
             q = a.divide(b);
             r = a.mod(b);
@@ -105,6 +102,7 @@ public class RSAGenerator {
         }
         BigInteger d = y0;
 
+        //d positiv machen
         if (a.equals(BigInteger.ONE)) {
             while (d.compareTo(BigInteger.ZERO) < 0) {
                 d = d.add(n);
