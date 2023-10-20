@@ -85,6 +85,14 @@ public class FileHandler {
         }
     }
 
+    public static void writeKey(BigInteger a, BigInteger b,char x, char y) throws IOException {
+        try (BufferedWriter skWriter = new BufferedWriter(new FileWriter("target/"+x+y+".txt"))) {
+            skWriter.write("(" + a + "," + b + ")");
+        } catch (IOException ex) {
+            throw new IOException("Write to "+a+b+".txt failed.",ex);
+
+        }}
+
     public static boolean isAscii(String input) {
         for (int i = 0; i < input.length(); i++) {
             if (input.charAt(i) > 127) {

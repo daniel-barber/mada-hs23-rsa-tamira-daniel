@@ -1,6 +1,7 @@
 package rsagenerator;
 
 import java.io.BufferedWriter;
+import java.io.File;
 import java.io.FileWriter;
 import java.io.IOException;
 import java.math.BigInteger;
@@ -42,18 +43,10 @@ public class RSAGenerator {
         BigInteger d = dBerechner(pn, e);
 
         //Write (n,d) to sk.txt
-        try (BufferedWriter skWriter = new BufferedWriter(new FileWriter("target/sk.txt"))) {
-            skWriter.write("(" + n + "," + d + ")");
-        } catch (IOException ex) {
-            throw new RuntimeException("Write to sk.txt failed.");
-        }
+        FileHandler.writeKey(n,d, 's', 'k');
 
         //Write (n,e) to pk.txt
-        try (BufferedWriter skWriter = new BufferedWriter(new FileWriter("target/pk.txt"))) {
-            skWriter.write("(" + n + "," + e + ")");
-        } catch (IOException ex) {
-            throw new RuntimeException("Write to pk.txt failed.");
-        }
+        FileHandler.writeKey(n,e, 'p', 'k');
     }
 
     private static boolean areCoprime(BigInteger pn, BigInteger e) {
@@ -109,7 +102,8 @@ public class RSAGenerator {
             }
             return d;
         } else {
-            return BigInteger.valueOf(-1);
+            throw new IllegalArgumentException("Euklidischer Algorithmus fehlgeschlagen.");
+
         }
     }
 
