@@ -11,7 +11,14 @@ Dieses Projekt besteht aus drei ausführbare Java Klassen. Die Ausführung der J
 
 ## TextEncryptor 
 
-`TextEncryptor` verschlüsselt das File [`text.txt`](src%2Fmain%2Fresources%2Ftext.txt) mit dem öffentlichen Schlüssel [`pk.txt`](src%2Fmain%2Fresources%2Fpk.txt) im Ordner [`resources`](src%2Fmain%2Fresources) und speichert die verschlüsselte Nachricht im Ordner [`/target`](target) als [`chiffre.txt`](target%2Fchiffre.txt)  ab.
+`TextEncryptor` verschlüsselt das File [`text.txt`](src%2Fmain%2Fresources%2Ftext.txt) (ASCII-Format) mit dem öffentlichen Schlüssel [`pk.txt`](src%2Fmain%2Fresources%2Fpk.txt) im Ordner [`resources`](src%2Fmain%2Fresources) und speichert die verschlüsselte Nachricht im Ordner [`/target`](target) als [`chiffre.txt`](target%2Fchiffre.txt)  ab.
+ 
+
 
 ## TextDecryptor
 `TextDecryptor` entschlüsselt das File [`chiffre.txt`](src%2Fmain%2Fresources%2Fchiffre.txt) mit dem privaten Schlüssel [`sk.txt`](src%2Fmain%2Fresources%2Fsk.txt) im Ordner [`resources`](src%2Fmain%2Fresources) und speichert die entschlüsselte Nachricht im Ordner [`/target`](target) als [`text-d.txt`](target%2Ftext-d.txt) ab. 
+
+## Lösung
+Die gegebene Datei [`chiffre.txt`](src%2Fmain%2Fresources%2Fchiffre.txt) entschlüsselt mit dem privaten Schlüssel [`sk.txt`](src%2Fmain%2Fresources%2Fsk.txt) ergibt den folgenden Text:
+
+**Das haben Sie gut gemacht!**

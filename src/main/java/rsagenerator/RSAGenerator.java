@@ -36,7 +36,7 @@ public class RSAGenerator {
             pn = (p.subtract(BigInteger.ONE)).multiply(q.subtract(BigInteger.ONE));
         } while (!areCoprime(pn, e));
 
-        //Calculate d with Euklidischer Algo
+        //Calculate d with euklidischer Algo
         BigInteger d = dBerechner(pn, e);
 
         //Write (n,d) to sk.txt
@@ -80,7 +80,7 @@ public class RSAGenerator {
         BigInteger q;
         BigInteger r;
 
-        //Umsetzung Euklidischer Algo
+        //Umsetzung euklidischer Algo
         while (!b.equals(BigInteger.ZERO)) {
             q = a.divide(b);
             r = a.mod(b);
@@ -102,7 +102,7 @@ public class RSAGenerator {
             }
             return d;
         } else {
-            throw new IllegalArgumentException("Euklidischer Algorithmus fehlgeschlagen.");
+            throw new IllegalArgumentException("Das euklidischer Algorithmus ist fehlgeschlagen.");
 
         }
     }
