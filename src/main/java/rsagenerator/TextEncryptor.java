@@ -10,12 +10,12 @@ public class TextEncryptor {
         BigInteger e;
 
         //public key einlesen und in n und e einspeichern
-        BigInteger[] privateKeyValues = FileHandler.readKey("pk");
+        BigInteger[] privateKeyValues = FileHandler.readKey("pk.txt");
         n = privateKeyValues[0];
         e = privateKeyValues[1];
 
         //text.txt einlesen und String in Ascii in int Array speichern
-        String text = FileHandler.readTextFile("text");
+        String text = FileHandler.readTextFile("text.txt");
         int[] textInAscii = FileHandler.toAsciiCode(text);
 
         //Loop zur Verschlüsselung der Ascii Werte mit der schnellen Exponentiation

@@ -10,10 +10,10 @@ import java.math.BigInteger;
 public class FileHandler {
 
     static BigInteger[] readChiffreFile(String fileName) {
-        try (BufferedReader reader = new BufferedReader(new FileReader("src/main/resources/" + fileName + ".txt"))) {
+        try (BufferedReader reader = new BufferedReader(new FileReader("src/main/resources/" + fileName))) {
             String line = reader.readLine();
             if (line == null) {
-                throw new RuntimeException(fileName + ".txt is empty.");
+                throw new RuntimeException(fileName + " is empty.");
             }
 
             String[] parts = line.split(",");
@@ -25,20 +25,20 @@ public class FileHandler {
 
             return chiffre;
         } catch (IOException ex) {
-            throw new RuntimeException("Couldn't read " + fileName + ".txt: " + ex.getMessage());
+            throw new RuntimeException("Couldn't read " + fileName + ": " + ex.getMessage());
         }
     }
 
     static String readTextFile(String fileName) {
         String input;
         try (
-            BufferedReader textReader = new BufferedReader(new FileReader("src/main/resources/" + fileName + ".txt"))) {
+            BufferedReader textReader = new BufferedReader(new FileReader("src/main/resources/" + fileName))) {
             input = textReader.readLine();
         } catch (IOException ex) {
             throw new RuntimeException("couldn't find file in /resources or file not in valid format.");
         }
         if (!isAscii(input)) {
-            throw new RuntimeException(fileName + ".txt contains non-ASCII characters");
+            throw new RuntimeException(fileName + " contains non-ASCII characters");
         }
 
         return input;
@@ -59,39 +59,39 @@ public class FileHandler {
         BigInteger n = new BigInteger(keyParts[0]);
         BigInteger d = new BigInteger(keyParts[1]);
 
-        return new BigInteger[]{n, d};
+        return new BigInteger[] {n, d};
     }
 
     static void writeFile(BigInteger[] encryptedAscii, String fileName) {
 
-        try(BufferedWriter writer = new BufferedWriter(new FileWriter("target/"+fileName))){
-            for(int i=0;i<encryptedAscii.length;i++){
+        try (BufferedWriter writer = new BufferedWriter(new FileWriter("target/" + fileName))) {
+            for (int i = 0; i < encryptedAscii.length; i++) {
                 writer.write(encryptedAscii[i].toString());
-                if(i<encryptedAscii.length-1){
+                if (i < encryptedAscii.length - 1) {
                     writer.write(",");
                 }
             }
-        }
-        catch (IOException e){
+        } catch (IOException e) {
             e.printStackTrace();
         }
     }
 
     public static void writeTextFile(String text, String fileName) {
-        try (BufferedWriter writer = new BufferedWriter(new FileWriter("target/" + fileName + ".txt"))) {
+        try (BufferedWriter writer = new BufferedWriter(new FileWriter("target/" + fileName))) {
             writer.write(text);
         } catch (IOException e) {
             e.printStackTrace();
         }
     }
 
-    public static void writeKey(BigInteger a, BigInteger b,char x, char y) throws IOException {
-        try (BufferedWriter skWriter = new BufferedWriter(new FileWriter("target/"+x+y+".txt"))) {
+    public static void writeKey(BigInteger a, BigInteger b, String fileName) throws IOException {
+        try (BufferedWriter skWriter = new BufferedWriter(new FileWriter("target/" + fileName))) {
             skWriter.write("(" + a + "," + b + ")");
         } catch (IOException ex) {
-            throw new IOException("Write to "+a+b+".txt failed.",ex);
+            throw new IOException("Write to " + fileName + "failed.", ex);
 
-        }}
+        }
+    }
 
     public static boolean isAscii(String input) {
         for (int i = 0; i < input.length(); i++) {
@@ -102,7 +102,7 @@ public class FileHandler {
         return true;
     }
 
-     static int[] toAsciiCode(String text) {
+    static int[] toAsciiCode(String text) {
         int[] asciiCodes = new int[text.length()];
         for (int i = 0; i < text.length(); i++) {
             asciiCodes[i] = (int) text.charAt(i);
@@ -110,10 +110,11 @@ public class FileHandler {
         return asciiCodes;
     }
 
-    public static String fromAsciiCode(int[] asciiCodes){
+    public static String fromAsciiCode(int[] asciiCodes) {
         StringBuilder stringbuilder = new StringBuilder();
-        for(int code:asciiCodes){
+        for (int code : asciiCodes) {
             stringbuilder.append((char) code);
-        }return stringbuilder.toString();
+        }
+        return stringbuilder.toString();
     }
 }

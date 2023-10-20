@@ -10,13 +10,12 @@ public class TextDecrypt {
         BigInteger d;
 
         //private key sk einlesen und in n und d einspeichern
-        String sk = FileHandler.readTextFile("sk");
-        BigInteger[] privateKeyValues = FileHandler.readKey("sk");
+        BigInteger[] privateKeyValues = FileHandler.readKey("sk.txt");
         n = privateKeyValues[0];
         d = privateKeyValues[1];
 
         //chiffre.txt einlesen
-        BigInteger[] chiffre = FileHandler.readChiffreFile("chiffre");
+        BigInteger[] chiffre = FileHandler.readChiffreFile("chiffre.txt");
 
         //Loop zur Entschlüsselung der Zeichen mit der schnellen Exponentiation
         int[] decryptedAscii = new int [chiffre.length];
@@ -24,10 +23,10 @@ public class TextDecrypt {
             decryptedAscii[i] = SchnelleExponentiation.quickExpo(chiffre[i], n, d).intValue();
         }
 
-        //decryptedAscii zu Asciizeichen zurückwandeln
+        //decryptedAscii zu Ascii-Zeichen zurückwandeln
         String dText = FileHandler.fromAsciiCode(decryptedAscii);
 
         //output to text-d.txt
-        FileHandler.writeTextFile(dText,"text-d");
+        FileHandler.writeTextFile(dText,"text-d.txt");
     }
 }

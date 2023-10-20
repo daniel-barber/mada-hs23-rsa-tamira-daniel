@@ -40,10 +40,10 @@ public class RSAGenerator {
         BigInteger d = dBerechner(pn, e);
 
         //Write (n,d) to sk.txt
-        FileHandler.writeKey(n,d, 's', 'k');
+        FileHandler.writeKey(n,d, "sk.txt");
 
         //Write (n,e) to pk.txt
-        FileHandler.writeKey(n,e, 'p', 'k');
+        FileHandler.writeKey(n,e, "pk.txt");
     }
 
     private static boolean areCoprime(BigInteger pn, BigInteger e) {
