@@ -1,8 +1,5 @@
 package rsagenerator;
 
-import java.io.BufferedWriter;
-import java.io.File;
-import java.io.FileWriter;
 import java.io.IOException;
 import java.math.BigInteger;
 import java.security.SecureRandom;
@@ -19,7 +16,7 @@ public class RSAGenerator {
     private static final BigInteger PUBLIC_EXPONENT = new BigInteger("3");
 
 
-    public static void main(String[] args) {
+    public static void main(String[] args) throws IOException {
         //Variablen
         BigInteger p;
         BigInteger q;
