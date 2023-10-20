@@ -26,5 +26,6 @@ public class TextEncryptor {
 
         //output to chiffre.txt
         FileHandler.writeFile(encryptedAscii, "chiffre.txt");
+        System.out.println("text.txt wurde erfolgreich verschlüsselt und in /target/chiffre.txt gespeichert.");
     }
 }

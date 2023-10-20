@@ -35,7 +35,7 @@ public class FileHandler {
             BufferedReader textReader = new BufferedReader(new FileReader("src/main/resources/" + fileName))) {
             input = textReader.readLine();
         } catch (IOException ex) {
-            throw new RuntimeException("couldn't find file in /resources or file not in valid format.");
+            throw new RuntimeException("couldn't find " + fileName + " in /resources folder or file not in valid format");
         }
         if (!isAscii(input)) {
             throw new RuntimeException(fileName + " contains non-ASCII characters");

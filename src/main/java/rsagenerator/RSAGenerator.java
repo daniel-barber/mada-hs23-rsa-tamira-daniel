@@ -44,6 +44,9 @@ public class RSAGenerator {
 
         //Write (n,e) to pk.txt
         FileHandler.writeKey(n,e, "pk.txt");
+
+        //Finish Message
+        System.out.println("RSA-Schlüsselpaar pk.txt und sk.txt wurde erfolgreich generiert und unter /target gespeichert.");
     }
 
     private static boolean areCoprime(BigInteger pn, BigInteger e) {
