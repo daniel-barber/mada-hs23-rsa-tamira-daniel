@@ -1,6 +1,9 @@
 # rsa-tamira-daniel
 Mathematik fur die Datenkommunikation | HS23 | Klasse 3Ib (3iCbb)
 
+- Tamira Leber: [tamira.leber@students.fhnw.ch](mailto:tamira.leber@students.fhnw.ch)
+- Daniel Barber: [daniel.barber@students.fhnw.ch](mailto:daniel.barber@students.fhnw.ch)
+
 ## Beschreibung
 Dieses Projekt besteht aus drei ausführbare Java Klassen. Die Ausführung der Java Klassen überschreibt allfällige Dateien im `/target` Ordner, wenn diese bereits bestehen.
 
